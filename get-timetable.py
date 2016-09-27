@@ -29,7 +29,9 @@ timetable.
 
 from ics import Calendar, Event
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select, WebDriverWait
 import datetime
 import getpass
 import os
@@ -116,10 +118,16 @@ class Scrapper(object):
         self.driver.get(URLS['timetable'])
 
         # Select 2016/2017
-        select_year = Select(self.driver.find_element_by_name('navOption'))
-        select_year.select_by_visible_text('2016/17')
+        # select_year = Select(self.driver.find_element_by_name('navOption'))
+        # select_year.select_by_visible_text('2016/17')
 
         # Select 'My Timetable'
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (By.ID, 'LinkBtn_mytimetablestudentset')
+            )
+        )
+
         own_table = self.driver.find_element_by_id('LinkBtn_mytimetablestudentset')
         own_table.click()
 
