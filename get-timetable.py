@@ -44,7 +44,8 @@ PHANTOM = os.getenv('PHANTOMJS', './phantomjs')
 
 URLS = {
     'login': 'https://portal.gre.ac.uk/cp/home/displaylogin',
-    'timetable': 'https://portal.gre.ac.uk/cp/redirect/new_timetable'
+    # 'timetable': 'https://portal.gre.ac.uk/cp/redirect/new_timetable'
+    'timetable': 'https://portal.gre.ac.uk/delegate/redirect/timetable'
 }
 
 # Timetable columns
@@ -69,7 +70,7 @@ DAYS = [
 ]
 
 # Week starting dates
-TZONE = pytz.timezone('Europe/London')
+TZONE = pytz.timezone('GMT')
 START_DATE = TZONE.localize(datetime.datetime(year=2016, month=9, day=19))
 WEEKS = ['dummy']
 
@@ -99,9 +100,10 @@ class Scrapper(object):
 
         self.driver.get(URLS['login'])
 
-        user_input = self.driver.find_element_by_id('user')
-        pass_input = self.driver.find_element_by_name('pass')
-        login_btn = self.driver.find_element_by_id('loginbutton')
+        user_input = self.driver.find_element_by_id('username')
+        pass_input = self.driver.find_element_by_id('password')
+        # login_btn = self.driver.find_element_by_id('loginbutton')
+        login_btn = self.driver.find_element_by_tag_name('button')
 
         user_input.clear()
         pass_input.clear()
